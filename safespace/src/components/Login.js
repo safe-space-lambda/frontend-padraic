@@ -1,7 +1,52 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import {login} from '../actions';
 
-class Signup extends Component {
+class Login extends Component {
     
+    state = {
+        username: '',
+        password: ''
+    }
+
+    input = e => {
+        this.setState({ [e.target.name]: e.target.value });
+      };
+
+    login = () => {
+        this.props.login(this.state);
+    }
+    render(){
+        return(
+            <div>
+                <form onSubmit={this.login}>
+                    <input
+                        onChange={this.input}
+                        placeholder='Username'
+                        value={this.state.username}
+                        name='username'
+                        type='text'
+                    />
+                    <input
+                        onChange={this.input}
+                        placeholder='Password'
+                        value={this.state.password}
+                        name='password'
+                        type='password'
+                    />
+                    <button type='submit'>Log In</button>
+                </form>
+            </div>
+        )
+    }
 }
 
-export default Login;
+const mapStateToProps = state => {
+    return {
+        user: state.loginReducer.users,
+        isLoading: state.loginReducer.isLoading,
+        error: state.loginReducer.error
+    }
+}
+
+export default connect(mapStateToProps, {login})(Login);
