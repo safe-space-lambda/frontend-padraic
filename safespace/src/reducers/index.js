@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
-import { signupReducer, loginReducer, listReducer, formReducer } from './loginReducer';
+import { signupReducer } from './signupReducer';
+import { loginReducer } from './loginReducer';
+import { listReducer } from './listReducer';
 
 export default combineReducers({
     signupReducer,
     loginReducer,
     listReducer,
-    formReducer
 });

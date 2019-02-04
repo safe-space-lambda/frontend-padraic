@@ -1,13 +1,13 @@
 import {SEND_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL} from '../actions';
 
-const initialState = {
+const initialLoginState = {
     username: '',
     password: '',
     isLoading: false,
     error: ''
 }
 
-const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialLoginState, action) => {
     switch (action.type){
         case SEND_LOGIN:
             return {
@@ -27,7 +27,7 @@ const loginReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload
             }
+        default:
+            return state
     }
 }
-
-export default loginReducer;

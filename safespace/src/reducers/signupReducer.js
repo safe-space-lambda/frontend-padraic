@@ -1,12 +1,12 @@
 import {SEND_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL} from '../actions';
 
-const initialState = {
+const initialSignupState = {
     users: [],
     isLoading: false,
     error: ''
 }
 
-const signupReducer = (state = initialState, action) => {
+export const signupReducer = (state = initialSignupState, action) => {
     switch (action.type){
         case SEND_SIGNUP:
             return {
@@ -28,7 +28,7 @@ const signupReducer = (state = initialState, action) => {
                 isLoading: false,
                 error: action.payload
             }
+        default:
+            return state
     }
 }
-
-export default signupReducer;

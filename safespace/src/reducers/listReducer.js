@@ -10,20 +10,16 @@ import {
     DELETED    
 }from '../actions';
 
-const initialState = {
+const initialListState = {
     fetchingList: false,
-    // listFetched: false,
-    // msgAdded: false,
     addingMsg: false,
     updatingMsg: false,
-    // msgUpdated: false,
     deletingMsg: false,
-    // msgDeleted: false,
     msgs: [],
     error: null
   }
 
-const reducer = (state = initialState, action) => {
+export const listReducer = (state = initialListState, action) => {
     switch (action.type) {
         case FETCHING:
             return {
@@ -61,7 +57,7 @@ const reducer = (state = initialState, action) => {
         case DELETED:
             return {
                 ...state,
-                Msgs: action.payload,
+                msgs: action.payload,
                 deletingMsg: false,
                 error: ''
             }
@@ -88,8 +84,6 @@ const reducer = (state = initialState, action) => {
                 error: action.payload
             }
         default:
-        return state;
+            return state;
     }
 }
-
-export default reducer;
