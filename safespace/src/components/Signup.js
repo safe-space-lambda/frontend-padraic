@@ -5,9 +5,10 @@ import {signup} from '../actions';
 class Signup extends Component {
 
     state = {
-        firstName: '',
-        lastName: '',
-        phone: '',
+        name: '',
+        // firstName: '',
+        // lastName: '',
+        // phone: '',
         username: '',
         password: ''
     }
@@ -16,7 +17,9 @@ class Signup extends Component {
         this.setState({ [e.target.name]: e.target.value });
       };
 
-    signup = () => {
+    signup = e => {
+        e.preventDefault();
+        console.log(this.state);
         this.props.signup(this.state);
     }
     render(){
@@ -25,25 +28,25 @@ class Signup extends Component {
                 <form onSubmit={this.signup}>
                     <input
                         onChange={this.input}
-                        placeholder='First Name'
-                        value={this.state.firstName}
-                        name='firstName'
+                        placeholder='Name'
+                        value={this.state.name}
+                        name='name'
                         type='text'
                     />
-                    <input
+                    {/* <input
                         onChange={this.input}
                         placeholder='Last Name'
                         value={this.state.lastName}
                         name='lastName'
                         type='text'
-                    />
-                    <input
+                    /> */}
+                    {/* <input
                         onChange={this.input}
                         placeholder='Telephone Number'
                         value={this.state.phone}
                         name='phone'
                         type='tel'
-                    />
+                    /> */}
                     <input
                         onChange={this.input}
                         placeholder='Username'
