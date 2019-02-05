@@ -1,6 +1,28 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {login} from '../actions';
+import styled from 'styled-components';
+
+const LoginBox = styled.div`
+    form {display: flex;
+    flex-direction: column;
+    padding: 5rem;
+    align-items: center;
+    justify-content: space-evenly;
+    input, button {
+        margin-top: 3rem;
+        width: 100%;
+        padding: .5rem;
+        border-radius: 8px;
+    }
+    button {
+        background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
+        border: 1px solid white;
+        
+        color: white;
+    }
+    }
+`;
 
 class Login extends Component {
     
@@ -20,8 +42,9 @@ class Login extends Component {
     }
     render(){
         return(
-            <div>
+            <LoginBox>
                 <form onSubmit={this.login}>
+                    <h3>Enter Username and Password</h3>
                     <input
                         onChange={this.input}
                         placeholder='Username'
@@ -38,7 +61,7 @@ class Login extends Component {
                     />
                     <button type='submit'>Log In</button>
                 </form>
-            </div>
+            </LoginBox>
         )
     }
 }

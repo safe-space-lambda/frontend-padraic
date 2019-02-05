@@ -19,12 +19,15 @@ export const SEND_LOGIN = 'SEND_LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 
+
 export const login = x => dispatch => {
     dispatch({type: SEND_LOGIN});
     axios.post(`${baseUrl}/api/login`, x)
         .then(res => {
             window.localStorage.setItem('token', res.data);
-            dispatch({type: LOGIN_SUCCESS, payload: res.data})})
+            window.localStorage.setItem('displayName', `Welcome, ${x.username}`);
+            dispatch({type: LOGIN_SUCCESS, payload: res.data});
+            window.location.reload()})           
         .catch(err => dispatch({type: LOGIN_FAIL, payload: err}));
 }
 
