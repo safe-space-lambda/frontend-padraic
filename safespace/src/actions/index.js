@@ -41,30 +41,30 @@ export const UPDATED = 'UPDATED';
 export const DELETING = 'DELETING';
 export const DELETED = 'DELETED'; 
 
-export const fetchList = () => dispatch => {
+export const fetchList = id => dispatch => {
     dispatch({type: FETCHING});
-    axios.get({baseUrl})
+    axios.get(`${baseUrl}/api/users/${id}`)
         .then(res => dispatch({type: FETCHED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
-export const addMsg = x => dispatch => {
+export const addMsg = (id, x) => dispatch => {
     dispatch({type: ADDING});
-    axios.post({baseUrl}, x)
+    axios.post(`${baseUrl}/api/users/${id}`, x)
         .then(res => dispatch({type: ADDED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const updateMsg = (id, x) => dispatch => {
     dispatch({type: UPDATING});
-    axios.put({baseUrl}, x)
+    axios.put(`${baseUrl}/api/messages/${id}`, x)
         .then(res => dispatch({type: UPDATED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const deleteMsg = id => dispatch => {
     dispatch({type: DELETING});
-    axios.delete({baseUrl})
+    axios.delete(`${baseUrl}/api/messages/${id}`)
         .then(res => dispatch({type: DELETED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }

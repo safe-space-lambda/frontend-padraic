@@ -40,17 +40,17 @@ const NavBar = styled.nav`
 
 const Navigation = props => {
 
-    const navSwap = () => props.token === null 
+    const navSwap = () => (props.token === null 
         ? <Link to='/'>Log In</Link>
         : <h2 onClick={props.logout}>Log Out</h2>
-    ;
+    );
 
     return(
         <NavBar>
             <h1>safe space</h1>
             <div>
                 <Link to='/'>Home</Link>
-                {navSwap}              
+                {props.navSwap}              
                 <NavLink to='/signup' activeClassName='inUse'>Sign Up</NavLink>
                 {props.displayName}
             </div>

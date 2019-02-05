@@ -6,6 +6,7 @@ import {SignupView} from './views/SignupView';
 import Navigation from './components/Navigation';
 import Login from './components/Login';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 // import './App.css';
 
@@ -32,6 +33,8 @@ class App extends Component {
     displayName: ''
   }
 
+  
+
   componentDidMount(){
     this.setState({
       ...this.state,
@@ -50,10 +53,11 @@ class App extends Component {
     window.location.reload();
   }
 
+
   render() {
     return (
       <AppBox>
-        <Navigation displayName={this.state.displayName} token={this.state.token} logout={this.logout}/>
+        <Navigation displayName={this.state.displayName} navSwap={this.navSwap}/>
         <Route path='/signup/' component={SignupView} />
         <Route exact path='/' render={props =>(
           this.state.token !== null 
