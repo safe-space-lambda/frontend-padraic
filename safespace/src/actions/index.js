@@ -1,13 +1,16 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 export const SEND_SIGNUP = 'SEND_SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
+const baseUrl = 'https://lambda-safe-space.herokuapp.com';
 
 export const signup = x => dispatch => {
     dispatch({type: SEND_LOGIN});
-    axios.post(`localhost:5000/api/register`, x)
+    axios.post(`${baseUrl}/api/register`, x)
         .then(res => dispatch({type: SIGNUP_SUCCESS, payload: res.data}))
         .catch(err => dispatch({type: SIGNUP_FAIL, payload: err}));
 }
@@ -18,8 +21,10 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 export const login = x => dispatch => {
     dispatch({type: SEND_LOGIN});
-    axios.post(`localhost:5000`, x)
-        .then(res => dispatch({type: LOGIN_SUCCESS, payload: res.data}))
+    axios.post(`${baseUrl}/api/login`, x)
+        .then(res => {
+            window.localStorage.setItem('token', res.data);
+            dispatch({type: LOGIN_SUCCESS, payload: res.data})})
         .catch(err => dispatch({type: LOGIN_FAIL, payload: err}));
 }
 
@@ -35,28 +40,28 @@ export const DELETED = 'DELETED';
 
 export const fetchList = () => dispatch => {
     dispatch({type: FETCHING});
-    axios.get(`localhost:5000`)
+    axios.get({baseUrl})
         .then(res => dispatch({type: FETCHED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const addMsg = x => dispatch => {
     dispatch({type: ADDING});
-    axios.post(`localhost:5000`, x)
+    axios.post({baseUrl}, x)
         .then(res => dispatch({type: ADDED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const updateMsg = (id, x) => dispatch => {
     dispatch({type: UPDATING});
-    axios.put(`localhost:5000`, x)
+    axios.put({baseUrl}, x)
         .then(res => dispatch({type: UPDATED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const deleteMsg = id => dispatch => {
     dispatch({type: DELETING});
-    axios.delete(`localhost:5000`)
+    axios.delete({baseUrl})
         .then(res => dispatch({type: DELETED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }

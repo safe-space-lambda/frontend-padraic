@@ -4,6 +4,7 @@ import {ListView} from './views/ListView';
 import {LoginView} from './views/LoginView';
 import {SignupView} from './views/SignupView';
 import Navigation from './components/Navigation';
+import Login from './components/Login';
 
 import './App.css';
 
@@ -11,7 +12,14 @@ import './App.css';
 class App extends Component {
   
   state = {
-    loggedIn: false
+    token: null
+  }
+
+  componentDidMount(){
+    this.setState({
+      ...this.state,
+      token: window.localStorage.getItem('token')
+    })
   }
 
   render() {
@@ -19,8 +27,14 @@ class App extends Component {
       <div className="App">
         <Navigation />
         <Route path='/signup/' component={SignupView} />
-        <Route path='/login/' component={LoginView} />
-        <Route exact path='/' component={ListView} />
+        <Route path='/login/' render={props =>(
+          <Login {...props}/>
+        )} />
+        <Route exact path='/' render={props =>(
+          this.state.token !== null 
+          ? <ListView {...props}/>
+          : <Login {...props}/>
+        )} />
       </div>
     );
   }
