@@ -8,6 +8,9 @@ import { applyMiddleware, createStore } from "redux";
 import combineReducers from "./reducers/index";
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const store = createStore(
     combineReducers,
