@@ -17,7 +17,6 @@ export const signupReducer = (state = initialSignupState, action) => {
             return {
                 ...state,
                 users: [
-                    ...state,
                     action.payload
                 ],
                 isLoading: false

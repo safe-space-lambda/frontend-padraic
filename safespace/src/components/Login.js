@@ -13,8 +13,10 @@ class Login extends Component {
         this.setState({ [e.target.name]: e.target.value });
       };
 
-    login = () => {
+    login = e => {
+        e.preventDefault();
         this.props.login(this.state);
+        this.props.history.push('/');
     }
     render(){
         return(
