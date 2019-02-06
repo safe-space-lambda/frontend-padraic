@@ -3,5 +3,5 @@ import MessageList from '../components/MessageList';
 
 
 export const ListView = () => {
-    return <MessageList />;
+    return <MessageList token={this.props.state.token}/>;
 }

@@ -7,6 +7,10 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
 const baseUrl = 'https://lambda-safe-space.herokuapp.com';
+const authToken = (window.localStorage.getItem('token'))
+    ? axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('token')
+    : axios.defaults.headers.common['Authorization'] = null
+;
 
 export const signup = x => dispatch => {
     dispatch({type: SEND_LOGIN});
@@ -24,12 +28,14 @@ export const login = x => dispatch => {
     dispatch({type: SEND_LOGIN});
     axios.post(`${baseUrl}/api/login`, x)
         .then(res => {
-            window.localStorage.setItem('token', res.data);
+            window.localStorage.setItem('token', res.data.token);
             window.localStorage.setItem('displayName', `Welcome, ${x.username}`);
             dispatch({type: LOGIN_SUCCESS, payload: res.data});
-            window.location.reload()})           
+            // window.location.reload()
+        })   
         .catch(err => dispatch({type: LOGIN_FAIL, payload: err}));
 }
+
 
 export const FAIL = 'FAIL';
 export const FETCHING = 'FETCHING';
@@ -41,16 +47,16 @@ export const UPDATED = 'UPDATED';
 export const DELETING = 'DELETING';
 export const DELETED = 'DELETED'; 
 
-export const fetchList = id => dispatch => {
+export const fetchList = () => dispatch => {
     dispatch({type: FETCHING});
-    axios.get(`${baseUrl}/api/users/${id}`)
+    axios.get(`${baseUrl}/api/users/`[authToken])
         .then(res => dispatch({type: FETCHED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const addMsg = (id, x) => dispatch => {
     dispatch({type: ADDING});
-    axios.post(`${baseUrl}/api/users/${id}`, x)
+    axios.post(`${baseUrl}/api/users/${id}/messages`, x)
         .then(res => dispatch({type: ADDED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }

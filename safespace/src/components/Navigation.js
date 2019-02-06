@@ -9,7 +9,6 @@ const NavBar = styled.nav`
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
     h1 {
         font-size: 4rem;
         line-height: 5rem;
@@ -26,9 +25,14 @@ const NavBar = styled.nav`
         justify-content: space-evenly;
         width: 100%;
         color: white;
+        a {text-decoration: none;};
         a:visited {
-            text-decoration: none;
+            
             color: white;
+        }
+        a:hover, h2:hover{
+            text-decoration: underline;
+            cursor: pointer;
         }
     }
 

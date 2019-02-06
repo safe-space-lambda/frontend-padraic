@@ -7,6 +7,7 @@ import Navigation from './components/Navigation';
 import Login from './components/Login';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
+import MessageList from './components/MessageList';
 
 // import './App.css';
 
@@ -62,7 +63,7 @@ class App extends Component {
         <Route path='/signup/' component={SignupView} />
         <Route exact path='/' render={props =>(
           this.state.token !== null 
-          ? <ListView {...props}/>
+          ? <MessageList {...props} token={this.state.token}/>
           : <Login {...props}/>
         )} />
       </AppBox>

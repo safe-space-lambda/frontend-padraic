@@ -54,3 +54,7 @@ border-spacing: 0;
 .inUse {
   display: none;
 }
+
+.hidden {
+  display: none;
+}
