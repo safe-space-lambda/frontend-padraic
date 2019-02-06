@@ -71,7 +71,7 @@ export const updateMsg = (id, userId, x) => dispatch => {
         .then(
             axios.get(`${baseUrl}/api/users/${userId}/messages`, {authToken})
                 .then(res => dispatch({type: FETCHED, payload: res.data}))
-                .catch(err => dispatch({type: FAIL, payload: err})));
+                .catch(err => dispatch({type: FAIL, payload: err})))
 }
 
 export const deleteMsg = (id, userId) => dispatch => {

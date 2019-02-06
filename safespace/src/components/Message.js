@@ -31,7 +31,7 @@ class Message extends Component {
 
     updateMsg = e => {
         e.preventDefault();
-        this.props.updateMsg(this.props.msg.id, window.localStorage.getItem('userId'), {text: this.state.newText});
+        this.props.updateMsg(this.props.msg.id, {text: this.state.newText});
         this.setState({
             ...this.state,
             formClass: 'inactive'
@@ -50,7 +50,7 @@ class Message extends Component {
                     <button onClick={e => this.props.deleteMsg(e, this.props.msg.id)}>Delete Message</button>
                 </div>
             </div>
-            <form className={`update-form ${this.state.formClass}`} onSubmit={e => this.updateMsg(e, this.props.msg.id, {text: this.state.text})}>
+            <form className={`update-form ${this.state.formClass}`} onSubmit={this.updateMsg}>
                     <input
                         onChange={this.input}
                         placeholder='New Message Text'
