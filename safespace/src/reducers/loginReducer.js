@@ -1,10 +1,8 @@
 import {SEND_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL} from '../actions';
 
 const initialLoginState = {
-    username: '',
-    password: '',
-    isLoading: false,
-    error: ''
+    name: '',
+    token: ''
 }
 
 export const loginReducer = (state = initialLoginState, action) => {
@@ -17,8 +15,8 @@ export const loginReducer = (state = initialLoginState, action) => {
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                username: action.payload.username,
-                password: action.payload.password,
+                name: action.payload.name,
+                token: action.payload.token,
                 isLoading: false
             }
         case LOGIN_FAIL:

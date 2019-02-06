@@ -1,6 +1,29 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {signup} from '../actions';
+import styled from 'styled-components';
+
+
+const SignupBox = styled.div`
+    form {display: flex;
+    flex-direction: column;
+    padding: 5rem;
+    align-items: center;
+    justify-content: space-evenly;
+    input, button {
+        margin-top: 3rem;
+        width: 100%;
+        padding: .5rem;
+        border-radius: 8px;
+    }
+    button {
+        background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
+        border: 1px solid white;
+        
+        color: white;
+    }
+    }
+`;
 
 class Signup extends Component {
 
@@ -24,8 +47,9 @@ class Signup extends Component {
     }
     render(){
         return(
-            <div>
+            <SignupBox>
                 <form onSubmit={this.signup}>
+                    <h3>Sign Up</h3>
                     <input
                         onChange={this.input}
                         placeholder='Name'
@@ -63,7 +87,7 @@ class Signup extends Component {
                     />
                     <button type='submit'>Sign Up</button>
                 </form>
-            </div>
+            </SignupBox>
         )
     }
 }

@@ -7,6 +7,10 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
 const baseUrl = 'https://lambda-safe-space.herokuapp.com';
+const authToken = (window.localStorage.getItem('token'))
+    ? axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('token')
+    : axios.defaults.headers.common['Authorization'] = null
+;
 
 export const signup = x => dispatch => {
     dispatch({type: SEND_LOGIN});
@@ -19,14 +23,19 @@ export const SEND_LOGIN = 'SEND_LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 
+
 export const login = x => dispatch => {
     dispatch({type: SEND_LOGIN});
     axios.post(`${baseUrl}/api/login`, x)
         .then(res => {
-            window.localStorage.setItem('token', res.data);
-            dispatch({type: LOGIN_SUCCESS, payload: res.data})})
+            window.localStorage.setItem('token', res.data.token);
+            window.localStorage.setItem('displayName', `Welcome, ${x.username}`);
+            dispatch({type: LOGIN_SUCCESS, payload: res.data});
+            // window.location.reload()
+        })   
         .catch(err => dispatch({type: LOGIN_FAIL, payload: err}));
 }
+
 
 export const FAIL = 'FAIL';
 export const FETCHING = 'FETCHING';
@@ -40,28 +49,28 @@ export const DELETED = 'DELETED';
 
 export const fetchList = () => dispatch => {
     dispatch({type: FETCHING});
-    axios.get({baseUrl})
+    axios.get(`${baseUrl}/api/users/`[authToken])
         .then(res => dispatch({type: FETCHED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
-export const addMsg = x => dispatch => {
+export const addMsg = (id, x) => dispatch => {
     dispatch({type: ADDING});
-    axios.post({baseUrl}, x)
+    axios.post(`${baseUrl}/api/users/${id}/messages`, x)
         .then(res => dispatch({type: ADDED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const updateMsg = (id, x) => dispatch => {
     dispatch({type: UPDATING});
-    axios.put({baseUrl}, x)
+    axios.put(`${baseUrl}/api/messages/${id}`, x)
         .then(res => dispatch({type: UPDATED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const deleteMsg = id => dispatch => {
     dispatch({type: DELETING});
-    axios.delete({baseUrl})
+    axios.delete(`${baseUrl}/api/messages/${id}`)
         .then(res => dispatch({type: DELETED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
