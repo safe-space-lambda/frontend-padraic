@@ -44,6 +44,7 @@ class App extends Component {
   }
 
   logout = () => {
+    console.log('pow');
     this.setState({
       ...this.state,
       token: null,
@@ -57,7 +58,7 @@ class App extends Component {
   render() {
     return (
       <AppBox>
-        <Navigation displayName={this.state.displayName} navSwap={this.navSwap}/>
+        <Navigation displayName={this.state.displayName} token={this.state.token} logout={this.logout}/>
         <Route path='/signup/' component={SignupView} />
         <Route exact path='/' render={props =>(
           this.state.token !== null 
