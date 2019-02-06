@@ -11,7 +11,7 @@ const SignupBox = styled.div`
     align-items: center;
     justify-content: space-evenly;
     input, button {
-        margin-top: 3rem;
+        margin-top: .5rem;
         width: 100%;
         padding: .5rem;
         border-radius: 8px;
@@ -22,6 +22,9 @@ const SignupBox = styled.div`
         
         color: white;
     }
+    p {
+        margin-top: 2rem;
+    }
     }
 `;
 
@@ -31,7 +34,7 @@ class Signup extends Component {
         name: '',
         // firstName: '',
         // lastName: '',
-        // phone: '',
+        phoneNumber: '1',
         username: '',
         password: ''
     }
@@ -50,6 +53,7 @@ class Signup extends Component {
             <SignupBox>
                 <form onSubmit={this.signup}>
                     <h3>Sign Up</h3>
+                    <p>your name</p>
                     <input
                         onChange={this.input}
                         placeholder='Name'
@@ -64,13 +68,7 @@ class Signup extends Component {
                         name='lastName'
                         type='text'
                     /> */}
-                    {/* <input
-                        onChange={this.input}
-                        placeholder='Telephone Number'
-                        value={this.state.phone}
-                        name='phone'
-                        type='tel'
-                    /> */}
+                    <p>username</p>
                     <input
                         onChange={this.input}
                         placeholder='Username'
@@ -78,12 +76,23 @@ class Signup extends Component {
                         name='username'
                         type='text'
                     />
+                    <p>password</p>
                     <input
                         onChange={this.input}
                         placeholder='Password'
                         value={this.state.password}
                         name='password'
                         type='password'
+                    />
+                    <p>telephone number</p>
+                    <input
+                        onChange={this.input}
+                        placeholder='Telephone Number'
+                        value={this.state.phoneNumber}
+                        name='phoneNumber'
+                        type='text'
+                        minLength='11'
+                        maxLength='11'
                     />
                     <button type='submit'>Sign Up</button>
                 </form>

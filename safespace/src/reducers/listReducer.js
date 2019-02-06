@@ -57,7 +57,6 @@ export const listReducer = (state = initialListState, action) => {
         case DELETED:
             return {
                 ...state,
-                msgs: action.payload,
                 deletingMsg: false,
                 error: ''
             }
@@ -70,7 +69,6 @@ export const listReducer = (state = initialListState, action) => {
         case UPDATED:
             return {
                 ...state,
-                msgs: action.payload,
                 updatingMsg: false,
                 error: ''
             }

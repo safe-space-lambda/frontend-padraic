@@ -2,7 +2,8 @@ import {SEND_LOGIN, LOGIN_SUCCESS, LOGIN_FAIL} from '../actions';
 
 const initialLoginState = {
     name: '',
-    token: ''
+    token: '',
+    id: ''
 }
 
 export const loginReducer = (state = initialLoginState, action) => {
@@ -17,6 +18,7 @@ export const loginReducer = (state = initialLoginState, action) => {
                 ...state,
                 name: action.payload.name,
                 token: action.payload.token,
+                id: action.payload.id,
                 isLoading: false
             }
         case LOGIN_FAIL:

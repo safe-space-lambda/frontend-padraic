@@ -15,7 +15,8 @@ const authToken = (window.localStorage.getItem('token'))
 export const signup = x => dispatch => {
     dispatch({type: SEND_LOGIN});
     axios.post(`${baseUrl}/api/register`, x)
-        .then(res => dispatch({type: SIGNUP_SUCCESS, payload: res.data}))
+        .then(res => {
+            dispatch({type: SIGNUP_SUCCESS, payload: res.data})})
         .catch(err => dispatch({type: SIGNUP_FAIL, payload: err}));
 }
 
@@ -29,7 +30,8 @@ export const login = x => dispatch => {
     axios.post(`${baseUrl}/api/login`, x)
         .then(res => {
             window.localStorage.setItem('token', res.data.token);
-            window.localStorage.setItem('displayName', `Welcome, ${x.username}`);
+            window.localStorage.setItem('displayName', `Welcome, ${res.data.name}`);
+            window.localStorage.setItem('userId', res.data.id);
             dispatch({type: LOGIN_SUCCESS, payload: res.data});
             // window.location.reload()
         })   
@@ -47,30 +49,38 @@ export const UPDATED = 'UPDATED';
 export const DELETING = 'DELETING';
 export const DELETED = 'DELETED'; 
 
-export const fetchList = () => dispatch => {
+export const fetchList = id => dispatch => {
     dispatch({type: FETCHING});
-    axios.get(`${baseUrl}/api/users/`[authToken])
+    axios.get(`${baseUrl}/api/users/${id}/messages`, {authToken})
         .then(res => dispatch({type: FETCHED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
 export const addMsg = (id, x) => dispatch => {
     dispatch({type: ADDING});
-    axios.post(`${baseUrl}/api/users/${id}/messages`, x)
+    axios.post(`${baseUrl}/api/users/${id}/messages`, x, {authToken})
         .then(res => dispatch({type: ADDED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
-export const updateMsg = (id, x) => dispatch => {
+export const updateMsg = (id, userId, x) => dispatch => {
     dispatch({type: UPDATING});
-    axios.put(`${baseUrl}/api/messages/${id}`, x)
+    axios.put(`${baseUrl}/api/messages/${id}`, x, {authToken})
         .then(res => dispatch({type: UPDATED, payload: res.data}))
-        .catch(err => dispatch({type: FAIL, payload: err}));
+        .catch(err => dispatch({type: FAIL, payload: err}))
+        .then(
+            axios.get(`${baseUrl}/api/users/${userId}/messages`, {authToken})
+                .then(res => dispatch({type: FETCHED, payload: res.data}))
+                .catch(err => dispatch({type: FAIL, payload: err})));
 }
 
-export const deleteMsg = id => dispatch => {
+export const deleteMsg = (id, userId) => dispatch => {
     dispatch({type: DELETING});
-    axios.delete(`${baseUrl}/api/messages/${id}`)
+    axios.delete(`${baseUrl}/api/messages/${id}`, {authToken})
         .then(res => dispatch({type: DELETED, payload: res.data}))
-        .catch(err => dispatch({type: FAIL, payload: err}));
+        .catch(err => dispatch({type: FAIL, payload: err}))
+        .then(
+            axios.get(`${baseUrl}/api/users/${userId}/messages`, {authToken})
+                .then(res => dispatch({type: FETCHED, payload: res.data}))
+                .catch(err => dispatch({type: FAIL, payload: err})))
 }

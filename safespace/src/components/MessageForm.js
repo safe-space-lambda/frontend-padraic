@@ -5,11 +5,12 @@ import React, {Component} from 'react';
 
 class MessageForm extends Component {
 
-        state = {
-            text: '',
-            formClass: 'hidden',
-            formOpen: 'closed'
-        }
+    state = {
+        text: '',
+        formClass: 'hidden',
+        formOpen: 'closed'
+    }
+
     input = e => {
         this.setState({ [e.target.name]: e.target.value });
     };
@@ -39,11 +40,13 @@ class MessageForm extends Component {
         return(
             <div className='msg-form'>
                 <button className={this.state.formOpen} onClick={this.formToggle}>New Message</button>
-                <form className={`add-msg ${this.state.formClass}`} onSubmit={this.props.addMsg}>
+                <form className={`add-msg ${this.state.formClass}`} onSubmit={e => this.props.addMsg(e, {
+                    text: this.state.text
+                })}>
                     <textarea
-                        onChange={this.handleInputChange}
+                        onChange={this.input}
                         placeholder='Enter New Message'
-                        value={this.state.name}
+                        value={this.state.text}
                         name='text'
                         type='text'
                         rows='4'

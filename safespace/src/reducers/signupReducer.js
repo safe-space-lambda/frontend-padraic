@@ -1,7 +1,7 @@
 import {SEND_SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAIL} from '../actions';
 
 const initialSignupState = {
-    users: [],
+    tempID: '',
     isLoading: false,
     error: ''
 }
@@ -16,9 +16,7 @@ export const signupReducer = (state = initialSignupState, action) => {
         case SIGNUP_SUCCESS:
             return {
                 ...state,
-                users: [
-                    action.payload
-                ],
+                tempID: action.payload,
                 isLoading: false
             }
         case SIGNUP_FAIL:

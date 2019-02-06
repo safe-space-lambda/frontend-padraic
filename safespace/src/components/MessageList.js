@@ -47,19 +47,25 @@ class MessageList extends Component {
         msgs: []
     }
 
-    componentDidMount(){
-        this.props.fetchList();
+    componentWillMount(){
+        this.props.fetchList(window.localStorage.getItem('userId'));
     }
 
     addMsg = (e, x) => {
         e.preventDefault();
-        this.props.addMsg(this.props.id, x);
+        this.props.addMsg(window.localStorage.getItem('userId'), x);
+        this.props.fetchList(window.localStorage.getItem('userId'));
     }
 
     deleteMsg = (e, id) => {
         e.preventDefault();
         console.log(id);
-        this.props.deleteMsg(id);
+        this.props.deleteMsg(id, window.localStorage.getItem('userId'));
+    }
+
+    updateMsg = (id, x) => {
+        console.log(id);
+        this.props.updateMsg(id, window.localStorage.getItem('userId'), x);
     }
 
     render(){
@@ -71,6 +77,8 @@ class MessageList extends Component {
                         return <Message 
                             msg={msg}
                             deleteMsg={this.deleteMsg}
+                            updateMsg={this.updateMsg}
+                            key={msg.id}
                         />
                     })}
                 </div>
@@ -87,7 +95,7 @@ const mapStateToProps = state => {
         deletingMsg: state.listReducer.deletingMsg,
         msgs: state.listReducer.msgs,
         error: state.listReducer.error,
-        id: state.loginReducer.token
+        id: state.signupReducer.id
     }
 }
 

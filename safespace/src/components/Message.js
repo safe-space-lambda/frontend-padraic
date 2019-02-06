@@ -4,7 +4,8 @@ class Message extends Component {
     constructor(props){
         super(props);
         this.state = {
-            text: props.text,
+            text: props.msg.text,
+            newText: '',
             formClass: 'hidden'
         }
     }
@@ -29,7 +30,8 @@ class Message extends Component {
 
 
     updateMsg = e => {
-        this.props.updateFriend(e, this.props.msg.id, this.state);
+        e.preventDefault();
+        this.props.updateMsg(this.props.msg.id, window.localStorage.getItem('userId'), {text: this.state.newText});
         this.setState({
             ...this.state,
             formClass: 'inactive'
@@ -38,7 +40,7 @@ class Message extends Component {
     
     render(){
         return (
-        <div className='friend' key={this.props.msg.id}>
+        <div>
             <div className='top-box'>
                 <div>
                     <p>{this.state.text}</p>
@@ -48,12 +50,12 @@ class Message extends Component {
                     <button onClick={e => this.props.deleteMsg(e, this.props.msg.id)}>Delete Message</button>
                 </div>
             </div>
-            <form className={`update-form ${this.state.formClass}`} onSubmit={this.updateMsg}>
+            <form className={`update-form ${this.state.formClass}`} onSubmit={e => this.updateMsg(e, this.props.msg.id, {text: this.state.text})}>
                     <input
                         onChange={this.input}
                         placeholder='New Message Text'
-                        value={this.state.text}
-                        name='text'
+                        value={this.state.newText}
+                        name='newText'
                         type='text'
                     />
                     <button type='submit'>Submit</button>
