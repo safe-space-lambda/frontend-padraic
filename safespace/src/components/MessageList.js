@@ -9,8 +9,12 @@ const Main = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 900px;
+    align-items: center;
+    h1 {
+        margin-top: 2rem;
+    }
     input, button {
-        width: 26rem;
+        width: 100%;
         padding: .5rem;
         border-radius: 8px;
     }
@@ -21,20 +25,33 @@ const Main = styled.div`
         color: white;
     }
     .msg-form{
+        width: 26rem;
         display: flex;
         flex-direction: column;
-        margin-top: 1rem;
+        padding: 1rem;
+        textarea {
+            width: 100%;
+        }
+        .top-button {
+            border-top: none;
+            border-left: none;
+        }
+
         .opened {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
+            border-bottom: none;
         }
         .unhidden {
             display: flex;
             flex-direction: column; 
+            align-items: center;
         }
         .bot-button {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
+            border-top: none;
+            border-left: none;
         }
 
     }
@@ -53,8 +70,8 @@ class MessageList extends Component {
 
 
 
-    addMsg = (e, x) => {
-        e.preventDefault();
+    addMsg = x => {
+        // e.preventDefault();
         this.props.addMsg(this.props.id, x, this.props.token);
         // this.props.fetchList(this.props.id, this.props.token);
     }
@@ -75,6 +92,7 @@ class MessageList extends Component {
     render(){
         return(
             <Main>
+                <h1>welcome, {this.props.name}</h1>
                 <MessageForm addMsg={this.addMsg}/>
                 <div className='msg-list'>
                     {this.props.msgs.map(msg => {
@@ -100,7 +118,8 @@ const mapStateToProps = state => {
         msgs: state.list.msgs,
         error: state.list.error,
         id: state.login.id,
-        token: state.login.token
+        token: state.login.token,
+        name: state.login.name
     }
 }
 

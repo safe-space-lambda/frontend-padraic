@@ -9,7 +9,7 @@ export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 const baseUrl = 'https://lambda-safe-space.herokuapp.com';
 
 export const signup = x => dispatch => {
-    dispatch({type: SEND_LOGIN});
+    dispatch({type: SEND_SIGNUP});
     axios.post(`${baseUrl}/api/register`, x)
         .then(res => {
             dispatch({type: SIGNUP_SUCCESS, payload: res.data})})

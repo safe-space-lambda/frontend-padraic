@@ -36,22 +36,29 @@ class MessageForm extends Component {
         : ''
     ;
 
+    addMsg = e => {
+        e.preventDefault();
+        this.props.addMsg({text: this.state.text});
+        this.setState({
+            ...this.state,
+            text: ''
+        })
+    }
+
     render(){
         return(
             <div className='msg-form'>
-                <button className={this.state.formOpen} onClick={this.formToggle}>New Message</button>
-                <form className={`add-msg ${this.state.formClass}`} onSubmit={e => this.props.addMsg(e, {
-                    text: this.state.text
-                })}>
+                <button className={`top-button ${this.state.formOpen}`} onClick={this.formToggle}>new message</button>
+                <form className={`add-msg ${this.state.formClass}`} onSubmit={this.addMsg}>
                     <textarea
                         onChange={this.input}
-                        placeholder='Enter New Message'
+                        placeholder='enter new message'
                         value={this.state.text}
                         name='text'
                         type='text'
                         rows='4'
                     ></textarea>
-                    <button className='bot-button' type='submit'>Add Message</button>
+                    <button className='bot-button' type='submit'>add message</button>
                 </form>
             </div>
         )
