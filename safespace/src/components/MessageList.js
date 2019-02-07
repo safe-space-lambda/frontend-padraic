@@ -26,7 +26,7 @@ const Main = styled.div`
         color: white;
     }
     .msg-form{
-        width: 26rem;
+        width: 21rem;
         display: flex;
         flex-direction: column;
         padding: 1rem;
