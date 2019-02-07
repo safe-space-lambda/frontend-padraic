@@ -7,8 +7,10 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
-export default combineReducers({
-    signupReducer,
-    loginReducer,
-    listReducer,
+const rootReducer = combineReducers({
+    signup: signupReducer,
+    login: loginReducer,
+    list: listReducer
 });
+
+export default rootReducer;

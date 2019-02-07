@@ -47,25 +47,29 @@ class MessageList extends Component {
         msgs: []
     }
 
-    componentWillMount(){
-        this.props.fetchList(window.localStorage.getItem('userId'));
+    componentDidMount(){
+        this.props.fetchList(this.props.id, this.props.token);
     }
+
+
 
     addMsg = (e, x) => {
         e.preventDefault();
-        this.props.addMsg(window.localStorage.getItem('userId'), x);
-        this.props.fetchList(window.localStorage.getItem('userId'));
+        this.props.addMsg(this.props.id, x, this.props.token);
+        // this.props.fetchList(this.props.id, this.props.token);
     }
 
     deleteMsg = (e, id) => {
         e.preventDefault();
         console.log(id);
-        this.props.deleteMsg(id, window.localStorage.getItem('userId'));
+        this.props.deleteMsg(id, this.props.id, this.props.token);
+        // this.props.fetchList(this.props.id, this.props.token);
     }
 
     updateMsg = (id, x) => {
         console.log(id);
-        this.props.updateMsg(id, window.localStorage.getItem('userId'), x);
+        this.props.updateMsg(id, this.props.id, x, this.props.token);
+        // this.props.fetchList(this.props.id, this.props.token);
     }
 
     render(){
@@ -89,13 +93,14 @@ class MessageList extends Component {
 
 const mapStateToProps = state => {
     return {
-        fetchingList: state.listReducer.fetchingList,
-        addingMsg: state.listReducer.addingMsg,
-        updatingMsg: state.listReducer.updatingMsg,
-        deletingMsg: state.listReducer.deletingMsg,
-        msgs: state.listReducer.msgs,
-        error: state.listReducer.error,
-        id: state.signupReducer.id
+        fetchingList: state.list.fetchingList,
+        addingMsg: state.list.addingMsg,
+        updatingMsg: state.list.updatingMsg,
+        deletingMsg: state.list.deletingMsg,
+        msgs: state.list.msgs,
+        error: state.list.error,
+        id: state.login.id,
+        token: state.login.token
     }
 }
 

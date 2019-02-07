@@ -8,6 +8,7 @@ import Login from './components/Login';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import MessageList from './components/MessageList';
+import { connect } from 'react-redux';
 
 // import './App.css';
 
@@ -28,19 +29,11 @@ const AppBox = styled.div`
 
 
 class App extends Component {
-  
-  state = {
-    token: null,
-    displayName: ''
-  }
-
-  
-
+    
   componentDidMount(){
     this.setState({
       ...this.state,
-      token: window.localStorage.getItem('token'),
-      displayName: window.localStorage.getItem('displayName')
+
     })
   }
 
@@ -59,11 +52,11 @@ class App extends Component {
   render() {
     return (
       <AppBox>
-        <Navigation displayName={this.state.displayName} token={this.state.token} logout={this.logout}/>
+        <Navigation logout={this.logout} loggedIn={this.props.loggedIn}/>
         <Route path='/signup/' component={SignupView} />
         <Route exact path='/' render={props =>(
-          this.state.token !== null 
-          ? <MessageList {...props} token={this.state.token}/>
+          this.props.loggedIn === true 
+          ? <MessageList {...props}/>
           : <Login {...props}/>
         )} />
       </AppBox>
@@ -71,4 +64,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.login.loggedIn
+  }
+}
+
+export default connect(mapStateToProps, {})(App);

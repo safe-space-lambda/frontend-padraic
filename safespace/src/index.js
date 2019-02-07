@@ -5,17 +5,22 @@ import './index.css';
 import App from './App';
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
-import combineReducers from "./reducers/index";
+import rootReducer from "./reducers/index";
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import axios from 'axios';
+import {loadState, saveState} from './components/LocalStorage'
 
 axios.defaults.withCredentials = true;
 
 const store = createStore(
-    combineReducers,
+    rootReducer,
     applyMiddleware(thunk, logger)
   );
+
+store.subscribe(() => {
+    saveState(store.getState())
+  })
 
 ReactDOM.render(
     <Provider store={store}>

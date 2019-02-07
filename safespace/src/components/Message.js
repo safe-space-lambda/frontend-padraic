@@ -4,7 +4,6 @@ class Message extends Component {
     constructor(props){
         super(props);
         this.state = {
-            text: props.msg.text,
             newText: '',
             formClass: 'hidden'
         }
@@ -43,7 +42,7 @@ class Message extends Component {
         <div>
             <div className='top-box'>
                 <div>
-                    <p>{this.state.text}</p>
+                    <p>{this.props.msg.text}</p>
                 </div>
                 <div className='button-box'>
                     <button onClick={this.formToggle}>Update Message</button>

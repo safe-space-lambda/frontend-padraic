@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Link} from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
 
@@ -44,7 +45,7 @@ const NavBar = styled.nav`
 
 const Navigation = props => {
 
-    const navSwap = props.token === null 
+    const navSwap = props.loggedIn === false 
         ? <Link to='/'>Log In</Link>
         : <h2 onClick={props.logout}>Log Out</h2>;
 
