@@ -7,11 +7,6 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
 const baseUrl = 'https://lambda-safe-space.herokuapp.com';
-const authToken = (window.localStorage.getItem('token'))
-    ? axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('token')
-    : axios.defaults.headers.common['Authorization'] = null
-;
-const auth = axios.defaults.headers.common['Authorization'];
 
 export const signup = x => dispatch => {
     dispatch({type: SEND_LOGIN});

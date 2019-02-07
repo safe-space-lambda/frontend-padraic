@@ -13,9 +13,13 @@ import {loadState, saveState} from './components/LocalStorage'
 
 axios.defaults.withCredentials = true;
 
+
+const persistedStore = loadState();
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk, logger)
+    persistedStore,
+    applyMiddleware(thunk, logger),
+    
   );
 
 store.subscribe(() => {
