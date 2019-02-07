@@ -2,3 +2,12 @@
     base = 'safespace/'
     command = 'yarn build'
     publish = 'safespace/build'
+
+
+[[redirects]]
+    from = '/*'   
+    to = '/index.html'   
+    status= 200
+
+    from = '/signup'
+    to = '/signup'

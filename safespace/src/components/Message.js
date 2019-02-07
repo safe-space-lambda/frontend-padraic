@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const MessageBox = styled.div`
     display: flex;
-    width: 100%;
+    width: 30rem;
     flex-direction: column;
     padding: 1rem 0;
     background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
@@ -11,6 +11,7 @@ const MessageBox = styled.div`
     border-right: 1px solid white;
     border-radius: 8px;
     margin-bottom: .5rem;
+    color: white;
     .top-box{
 
         display: flex;
