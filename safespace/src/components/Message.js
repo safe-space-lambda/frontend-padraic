@@ -1,10 +1,52 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
+
+const MessageBox = styled.div`
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: 1rem 0;
+    background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-radius: 8px;
+    margin-bottom: .5rem;
+    .top-box{
+
+        display: flex;
+        flex-direction: column;
+        .text-box{
+            width: 100%;
+            padding: 1rem;
+        }
+        .button-box{
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            .msg-button{
+                width: 30%;
+                border: none;
+                background-color: none;
+            }
+        }
+    }
+    .unhidden{
+        display: flex;
+        flex-direction: column;
+    }
+    .edit-button{
+        margin-top: .5rem;
+        width:30%;
+        border: none;
+        align-self: center;
+    }
+`
 
 class Message extends Component {
     constructor(props){
         super(props);
         this.state = {
-            text: props.text,
+            newText: this.props.msg.text,
             formClass: 'hidden'
         }
     }
@@ -29,36 +71,38 @@ class Message extends Component {
 
 
     updateMsg = e => {
-        this.props.updateFriend(e, this.props.msg.id, this.state);
+        e.preventDefault();
+        this.props.updateMsg(this.props.msg.id, {text: this.state.newText});
         this.setState({
             ...this.state,
-            formClass: 'inactive'
+            formClass: 'hidden'
         });
     }
     
     render(){
         return (
-        <div className='friend' key={this.props.msg.id}>
+        <MessageBox>
             <div className='top-box'>
-                <div>
-                    <p>{this.state.text}</p>
+                <div className='text-box'>
+                    <p>{this.props.msg.text}</p>
                 </div>
                 <div className='button-box'>
-                    <button onClick={this.formToggle}>Update Message</button>
-                    <button onClick={e => this.props.deleteMsg(e, this.props.msg.id)}>Delete Message</button>
+                    <button className='msg-button' onClick={this.formToggle}>edit message</button>
+                    <button className='msg-button' onClick={e => this.props.deleteMsg(e, this.props.msg.id)}>delete message</button>
                 </div>
             </div>
             <form className={`update-form ${this.state.formClass}`} onSubmit={this.updateMsg}>
-                    <input
+                    <textarea
                         onChange={this.input}
                         placeholder='New Message Text'
-                        value={this.state.text}
-                        name='text'
+                        value={this.state.newText}
+                        name='newText'
                         type='text'
-                    />
-                    <button type='submit'>Submit</button>
+                        rows='4'>
+                    </textarea>
+                    <button className='edit-button' type='submit'>submit</button>
             </form>
-        </div>
+        </MessageBox>
     )}
 }
 

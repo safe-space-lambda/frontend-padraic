@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {login} from '../actions';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 const LoginBox = styled.div`
+    margin-top: 10rem;
     form {display: flex;
     flex-direction: column;
     padding: 5rem;
@@ -15,11 +17,18 @@ const LoginBox = styled.div`
         padding: .5rem;
         border-radius: 8px;
     }
-    button {
+    .login-button {
         background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
-        border: 1px solid white;
-        
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
         color: white;
+    }
+    .toSignup {
+        margin-top: 2rem;
+        a {
+            text-decoration: none;
+            color: #4361c2
+        }
     }
     }
 `;
@@ -40,11 +49,18 @@ class Login extends Component {
         this.props.login(this.state);
         this.props.history.push('/');
     }
+
+
+
     render(){
+        const loadingSwap = this.props.isLoading === true
+        ? <h3>logging in...</h3>
+        : <h3>enter username and password</h3>
+
         return(
             <LoginBox>
                 <form onSubmit={this.login}>
-                    <h3>Enter Username and Password</h3>
+                    {loadingSwap}
                     <input
                         onChange={this.input}
                         placeholder='Username'
@@ -59,7 +75,10 @@ class Login extends Component {
                         name='password'
                         type='password'
                     />
-                    <button type='submit'>Log In</button>
+                    <button className='login-button' type='submit'>log in</button>
+                    <div className='toSignup'>
+                        not a member? <Link to='/signup'>register here</Link>
+                    </div>
                 </form>
             </LoginBox>
         )
@@ -68,9 +87,9 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.loginReducer.users,
-        isLoading: state.loginReducer.isLoading,
-        error: state.loginReducer.error
+        user: state.login.users,
+        isLoading: state.login.isLoading,
+        error: state.login.error
     }
 }
 

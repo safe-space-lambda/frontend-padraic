@@ -5,11 +5,12 @@ import React, {Component} from 'react';
 
 class MessageForm extends Component {
 
-        state = {
-            text: '',
-            formClass: 'hidden',
-            formOpen: 'closed'
-        }
+    state = {
+        text: '',
+        formClass: 'hidden',
+        formOpen: 'closed'
+    }
+
     input = e => {
         this.setState({ [e.target.name]: e.target.value });
     };
@@ -35,20 +36,29 @@ class MessageForm extends Component {
         : ''
     ;
 
+    addMsg = e => {
+        e.preventDefault();
+        this.props.addMsg({text: this.state.text});
+        this.setState({
+            ...this.state,
+            text: ''
+        })
+    }
+
     render(){
         return(
             <div className='msg-form'>
-                <button className={this.state.formOpen} onClick={this.formToggle}>New Message</button>
-                <form className={`add-msg ${this.state.formClass}`} onSubmit={this.props.addMsg}>
+                <button className={`top-button ${this.state.formOpen}`} onClick={this.formToggle}>new message</button>
+                <form className={`add-msg ${this.state.formClass}`} onSubmit={this.addMsg}>
                     <textarea
-                        onChange={this.handleInputChange}
-                        placeholder='Enter New Message'
-                        value={this.state.name}
+                        onChange={this.input}
+                        placeholder='enter new message'
+                        value={this.state.text}
                         name='text'
                         type='text'
                         rows='4'
                     ></textarea>
-                    <button className='bot-button' type='submit'>Add Message</button>
+                    <button className='bot-button' type='submit'>add message</button>
                 </form>
             </div>
         )

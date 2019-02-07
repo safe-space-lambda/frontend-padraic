@@ -5,23 +5,41 @@ import styled from 'styled-components';
 
 
 const SignupBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10rem;
+    h3 {
+        font-size: 3rem;
+        align-self: center;
+        margin-top: 3rem;
+    }
     form {display: flex;
     flex-direction: column;
     padding: 5rem;
+    width: 30rem;
     align-items: center;
+    
     justify-content: space-evenly;
     input, button {
-        margin-top: 3rem;
+        margin-top: .5rem;
         width: 100%;
         padding: .5rem;
         border-radius: 8px;
     }
-    button {
+    .signup-button {
         background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
-        border: 1px solid white;
-        
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
         color: white;
     }
+    p {
+        margin-top: 2rem;
+    }
+
+    }
+    .hidden {
+        display: none;
     }
 `;
 
@@ -31,7 +49,7 @@ class Signup extends Component {
         name: '',
         // firstName: '',
         // lastName: '',
-        // phone: '',
+        phoneNumber: '1',
         username: '',
         password: ''
     }
@@ -45,11 +63,16 @@ class Signup extends Component {
         console.log(this.state);
         this.props.signup(this.state);
     }
+
+
+
     render(){
+
         return(
             <SignupBox>
-                <form onSubmit={this.signup}>
-                    <h3>Sign Up</h3>
+                <h3>{this.props.displayText}</h3>
+                <form className={this.props.hideDone} onSubmit={this.signup}>
+                    <p>your name</p>
                     <input
                         onChange={this.input}
                         placeholder='Name'
@@ -64,13 +87,7 @@ class Signup extends Component {
                         name='lastName'
                         type='text'
                     /> */}
-                    {/* <input
-                        onChange={this.input}
-                        placeholder='Telephone Number'
-                        value={this.state.phone}
-                        name='phone'
-                        type='tel'
-                    /> */}
+                    <p>username</p>
                     <input
                         onChange={this.input}
                         placeholder='Username'
@@ -78,6 +95,7 @@ class Signup extends Component {
                         name='username'
                         type='text'
                     />
+                    <p>password</p>
                     <input
                         onChange={this.input}
                         placeholder='Password'
@@ -85,7 +103,17 @@ class Signup extends Component {
                         name='password'
                         type='password'
                     />
-                    <button type='submit'>Sign Up</button>
+                    <p>telephone number</p>
+                    <input
+                        onChange={this.input}
+                        placeholder='Telephone Number'
+                        value={this.state.phoneNumber}
+                        name='phoneNumber'
+                        type='text'
+                        minLength='11'
+                        maxLength='11'
+                    />
+                    <button className='signup-button' type='submit'>sign up</button>
                 </form>
             </SignupBox>
         )
@@ -94,9 +122,10 @@ class Signup extends Component {
 
 const mapStateToProps = state => {
     return {
-        users: state.signupReducer.users,
-        isLoading: state.signupReducer.isLoading,
-        error: state.signupReducer.error
+        isLoading: state.signup.isLoading,
+        displayText: state.signup.displayText,
+        hideDone: state.signup.hideDone,
+        error: state.signup.error
     }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Link} from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 // background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
 
@@ -9,6 +10,8 @@ const NavBar = styled.nav`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed;
+    top: 0;
     h1 {
         font-size: 4rem;
         line-height: 5rem;
@@ -44,18 +47,19 @@ const NavBar = styled.nav`
 
 const Navigation = props => {
 
-    const navSwap = props.token === null 
-        ? <Link to='/'>Log In</Link>
-        : <h2 onClick={props.logout}>Log Out</h2>;
+    const navSwap = props.loggedIn === false 
+        ? <Link to='/'>log in</Link>
+        : <><Link to='/'>home</Link> <h2 onClick={props.logout}>log out</h2></>
 
+    const signSwap = props.loggedIn === false
+        && <NavLink to='/signup' activeClassName='inUse'>sign up</NavLink>
+    
     return(
         <NavBar>
             <h1>safe space</h1>
             <div>
-                <Link to='/'>Home</Link>
                 {navSwap}              
-                <NavLink to='/signup' activeClassName='inUse'>Sign Up</NavLink>
-                {props.displayName}
+                {signSwap}
             </div>
         </NavBar>
     )

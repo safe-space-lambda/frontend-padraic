@@ -58,3 +58,7 @@ border-spacing: 0;
 .hidden {
   display: none;
 }
+
+body {
+  background-image: linear-gradient(to top right, #c3e895, #c3e895, #6bd4c8, #57aed3, #4a87d3, #6b88e6);
+}

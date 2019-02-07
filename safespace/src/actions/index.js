@@ -7,15 +7,12 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 
 const baseUrl = 'https://lambda-safe-space.herokuapp.com';
-const authToken = (window.localStorage.getItem('token'))
-    ? axios.defaults.headers.common['Authorization'] = window.localStorage.getItem('token')
-    : axios.defaults.headers.common['Authorization'] = null
-;
 
 export const signup = x => dispatch => {
-    dispatch({type: SEND_LOGIN});
+    dispatch({type: SEND_SIGNUP});
     axios.post(`${baseUrl}/api/register`, x)
-        .then(res => dispatch({type: SIGNUP_SUCCESS, payload: res.data}))
+        .then(res => {
+            dispatch({type: SIGNUP_SUCCESS, payload: res.data})})
         .catch(err => dispatch({type: SIGNUP_FAIL, payload: err}));
 }
 
@@ -28,10 +25,7 @@ export const login = x => dispatch => {
     dispatch({type: SEND_LOGIN});
     axios.post(`${baseUrl}/api/login`, x)
         .then(res => {
-            window.localStorage.setItem('token', res.data.token);
-            window.localStorage.setItem('displayName', `Welcome, ${x.username}`);
             dispatch({type: LOGIN_SUCCESS, payload: res.data});
-            // window.location.reload()
         })   
         .catch(err => dispatch({type: LOGIN_FAIL, payload: err}));
 }
@@ -47,30 +41,37 @@ export const UPDATED = 'UPDATED';
 export const DELETING = 'DELETING';
 export const DELETED = 'DELETED'; 
 
-export const fetchList = () => dispatch => {
+export const fetchList = (userId, token) => dispatch => {
     dispatch({type: FETCHING});
-    axios.get(`${baseUrl}/api/users/`[authToken])
+    let headers = {Authorization: token,};
+    axios.get(`${baseUrl}/api/users/${userId}/messages`, {headers: headers})
         .then(res => dispatch({type: FETCHED, payload: res.data}))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
-export const addMsg = (id, x) => dispatch => {
+export const addMsg = (userId, x, token) => dispatch => {
     dispatch({type: ADDING});
-    axios.post(`${baseUrl}/api/users/${id}/messages`, x)
+    let headers = {Authorization: token,};
+    axios.post(`${baseUrl}/api/users/${userId}/messages`, x, {headers: headers})
         .then(res => dispatch({type: ADDED, payload: res.data}))
+        .then(() => fetchList(userId, token)(dispatch))
         .catch(err => dispatch({type: FAIL, payload: err}));
 }
 
-export const updateMsg = (id, x) => dispatch => {
+export const updateMsg = (postId, userId, x, token) => dispatch => {
     dispatch({type: UPDATING});
-    axios.put(`${baseUrl}/api/messages/${id}`, x)
+    let headers = {Authorization: token,};
+    axios.put(`${baseUrl}/api/messages/${postId}`, x, {headers: headers})
         .then(res => dispatch({type: UPDATED, payload: res.data}))
-        .catch(err => dispatch({type: FAIL, payload: err}));
+        .then(() => fetchList(userId, token)(dispatch))
+        .catch(err => dispatch({type: FAIL, payload: err}))
 }
 
-export const deleteMsg = id => dispatch => {
+export const deleteMsg = (id, userId, token) => dispatch => {
     dispatch({type: DELETING});
-    axios.delete(`${baseUrl}/api/messages/${id}`)
+    let headers = {Authorization: token,};
+    axios.delete(`${baseUrl}/api/messages/${id}`, {headers: headers})
         .then(res => dispatch({type: DELETED, payload: res.data}))
-        .catch(err => dispatch({type: FAIL, payload: err}));
+        .then(() => fetchList(userId, token)(dispatch))
+        .catch(err => dispatch({type: FAIL, payload: err}))
 }
