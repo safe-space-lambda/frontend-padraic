@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const MessageBox = styled.div`
     display: flex;
-    width: 30rem;
+    width: 25rem;
     flex-direction: column;
     padding: 1rem 0;
     background-image: linear-gradient(to bottom right, #4fa49a, #4361c2);
