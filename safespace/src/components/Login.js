@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 
 const LoginBox = styled.div`
+    margin-top: 10rem;
     form {display: flex;
     flex-direction: column;
     padding: 5rem;

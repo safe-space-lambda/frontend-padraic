@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const Main = styled.div`
     display: flex;
     flex-direction: column;
+    margin-top: 10rem;
     max-width: 900px;
     align-items: center;
     h1 {

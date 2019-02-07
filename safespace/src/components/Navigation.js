@@ -10,6 +10,8 @@ const NavBar = styled.nav`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed;
+    top: 0;
     h1 {
         font-size: 4rem;
         line-height: 5rem;

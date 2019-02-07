@@ -8,7 +8,7 @@ const SignupBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    margin-top: 10rem;
     h3 {
         font-size: 3rem;
         align-self: center;
