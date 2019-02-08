@@ -77,7 +77,7 @@ class Login extends Component {
                     />
                     <button className='login-button' type='submit'>log in</button>
                     <div className='toSignup'>
-                        not a member? <Link to='/signup'>register here</Link>
+                        not a member?<br/> <Link to='/signup'>register here</Link>
                     </div>
                 </form>
             </LoginBox>

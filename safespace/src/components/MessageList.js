@@ -26,7 +26,7 @@ const Main = styled.div`
         color: white;
     }
     .msg-form{
-        width: 26rem;
+        width: 21rem;
         display: flex;
         flex-direction: column;
         padding: 1rem;
@@ -72,22 +72,18 @@ class MessageList extends Component {
 
 
     addMsg = x => {
-        // e.preventDefault();
         this.props.addMsg(this.props.id, x, this.props.token);
-        // this.props.fetchList(this.props.id, this.props.token);
     }
 
     deleteMsg = (e, id) => {
         e.preventDefault();
         console.log(id);
         this.props.deleteMsg(id, this.props.id, this.props.token);
-        // this.props.fetchList(this.props.id, this.props.token);
     }
 
     updateMsg = (id, x) => {
         console.log(id);
         this.props.updateMsg(id, this.props.id, x, this.props.token);
-        // this.props.fetchList(this.props.id, this.props.token);
     }
 
     render(){
